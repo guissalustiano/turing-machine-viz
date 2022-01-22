@@ -303,6 +303,7 @@ var controller = (function () {
     },
     editor: {
       load: getButton(ed, 'editor-load'),
+      export: getButton(ed, 'editor-export'),
       revert: getButton(ed, 'editor-revert')
     }
   }, menu.currentDocument);

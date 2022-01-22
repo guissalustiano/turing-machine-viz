@@ -8,6 +8,22 @@ var TMSpecError = parser.TMSpecError;
 var YAMLException = parser.YAMLException;
 var UndoManager = ace.require('ace/undomanager').UndoManager;
 
+// https://stackoverflow.com/questions/3665115/how-to-create-a-file-in-memory-for-user-to-download-but-not-through-server#answer-33542499
+function download(filename, data) {
+    const blob = new Blob([data], {type: 'text/csv'});
+    if(window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveBlob(blob, filename);
+    }
+    else{
+        const elem = window.document.createElement('a');
+        elem.href = window.URL.createObjectURL(blob);
+        elem.download = filename;        
+        document.body.appendChild(elem);
+        elem.click();        
+        document.body.removeChild(elem);
+    }
+}
+
 /**
  * For editing and displaying a TMDocument.
  * The controller coordinates the interactions between
@@ -55,6 +71,39 @@ function TMDocumentController(containers, buttons, document) {
         // save whenever "Load" is pressed
         self.save();
         self.editor.focus();
+      });
+  editorButtons.export
+      .addEventListener('click', function () {
+        let spec = self.simulator.spec;
+        console.log("exporting...");
+        console.log(spec);
+
+        if (spec.blank === ' ') {
+          alert(`sysprog machine dont support ' ' as blankspace`)
+          throw `sysprog machine dont support ' ' as blankspace`
+        }
+
+        let fileContent = ''
+        fileContent += `ATM`
+        fileContent += `PCS 2302/2024 autogenerate\n`
+        fileContent += `${Array.from(new Set(spec.input)).join(' ')}\n` // alfabeto de entrada
+        fileContent += `${Array.from(new Set(spec.blank + spec.input)).join(' ')}\n` // alfabeto da fita
+        fileContent += `1\n` // numero de fitas
+        fileContent += `1\n` // numero de trilhas na fita 0
+        fileContent += `2\n` // direcoes da fita 0 (infinita nas duas)
+        fileContent += `${spec.startState}\n` // estado inicial
+        fileContent += `${Object.keys(spec.table).find((k) => spec.table[k] === null)}\n` // estado final (estado sem nenhum valor)
+        for(const actualState in spec.table){
+          Object.entries(spec.table[actualState] || {}).filter(([k, v]) => v).flatMap(([k, v]) => k.split(',').map(c => [c, v])).forEach(([readSimbol, action]) => {
+            const nextState = action['state'] || actualState;
+            const moveDirection = action['move'].toString();
+            const writeSimbol = action['symbol'] || readSimbol;
+            fileContent += `${actualState} ${readSimbol} ${writeSimbol} ${nextState} ${moveDirection}\n`
+          })
+        }
+        fileContent += `end`
+        console.log(fileContent);
+        download('tm.txt', fileContent)
       });
   editorButtons.revert
       .addEventListener('click', function () {

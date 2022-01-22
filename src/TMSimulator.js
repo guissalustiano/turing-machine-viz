@@ -74,8 +74,14 @@ Object.defineProperties(TMSimulator.prototype, {
         }
       }
       this.__sourceCode = sourceCode;
+      this.__spec = spec;
     },
     enumerable: true
+  },
+  spec: {
+    get: function() {
+      return this.__spec;
+    }
   },
   positionTable: {
     get: function () {
