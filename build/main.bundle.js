@@ -2118,6 +2118,7 @@ webpackJsonp_name_([1],[
 	      });
 	  editorButtons.export
 	      .addEventListener('click', function () {
+	        editorButtons.load.click()
 	        let spec = self.simulator.spec;
 	        console.log("exporting...");
 	        console.log(spec);
