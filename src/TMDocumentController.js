@@ -74,6 +74,7 @@ function TMDocumentController(containers, buttons, document) {
       });
   editorButtons.export
       .addEventListener('click', function () {
+        editorButtons.load.click()
         let spec = self.simulator.spec;
         console.log("exporting...");
         console.log(spec);
