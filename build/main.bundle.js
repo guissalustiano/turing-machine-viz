@@ -2126,12 +2126,13 @@ webpackJsonp_name_([1],[
 	          alert(`sysprog machine dont support ' ' as blankspace`)
 	          throw `sysprog machine dont support ' ' as blankspace`
 	        }
+	        const writeSimbols = Object.values(spec.table).flatMap(o => Object.values(o || {})).map(o => o.symbol).filter(v => v)
 	
 	        let fileContent = ''
-	        fileContent += `ATM`
+	        fileContent += `ATM\n`
 	        fileContent += `PCS 2302/2024 autogenerate\n`
-	        fileContent += `${Array.from(new Set(spec.input)).join(' ')}\n` // alfabeto de entrada
-	        fileContent += `${Array.from(new Set(spec.blank + spec.input)).join(' ')}\n` // alfabeto da fita
+	        fileContent += `${Array.from(new Set(spec.input + writeSimbols)).join(' ')}\n` // alfabeto de entrada
+	        fileContent += `${Array.from(new Set(spec.blank + spec.input + writeSimbols)).join(' ')}\n` // alfabeto da fita
 	        fileContent += `1\n` // numero de fitas
 	        fileContent += `1\n` // numero de trilhas na fita 0
 	        fileContent += `2\n` // direcoes da fita 0 (infinita nas duas)
@@ -2142,7 +2143,7 @@ webpackJsonp_name_([1],[
 	            const nextState = action['state'] || actualState;
 	            const moveDirection = action['move'].toString();
 	            const writeSimbol = action['symbol'] || readSimbol;
-	            fileContent += `${actualState} ${readSimbol} ${writeSimbol} ${nextState} ${moveDirection}\n`
+	            fileContent += `${actualState} ${readSimbol} ${nextState} ${writeSimbol} ${moveDirection}\n`
 	          })
 	        }
 	        fileContent += `end`
