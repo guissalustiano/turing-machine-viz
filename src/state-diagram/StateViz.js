@@ -140,7 +140,7 @@ function edgePathFor(nodeRadius, shape, d) {
 
 function rectCenter(svgrect) {
   return {x: svgrect.x + svgrect.width/2,
-          y: svgrect.y + svgrect.height/2};
+    y: svgrect.y + svgrect.height/2};
 }
 
 function identity(x) { return x; }
@@ -267,7 +267,7 @@ function StateViz(container, nodes, linkArray) {
     var edgepath = group
       .append('path')
         .attr({'class': 'edgepath',
-               'id': 'edgepath'+edgeIndex })
+          'id': 'edgepath'+edgeIndex })
         .each(function (d) { d.domNode = this; });
 
     var labels = group.selectAll('.edgelabel')
@@ -353,14 +353,14 @@ function StateViz(container, nodes, linkArray) {
       .data(['arrowhead', 'active-arrowhead', 'reversed-arrowhead', 'reversed-active-arrowhead'])
     .enter().append('marker')
       .attr({'id': function (d) { return d; },
-             'viewBox':'0 -5 10 10',
-             'refX': function (d) {
-               return (d.lastIndexOf('reversed-', 0) === 0) ? 0 : 10;
-             },
-             'orient':'auto',
-             'markerWidth':10,
-             'markerHeight':10
-            })
+        'viewBox':'0 -5 10 10',
+        'refX': function (d) {
+          return (d.lastIndexOf('reversed-', 0) === 0) ? 0 : 10;
+        },
+        'orient':'auto',
+        'markerWidth':10,
+        'markerHeight':10
+      })
     .append('path')
       .attr('d', 'M 0 -5 L 10 0 L 0 5 Z')
       .attr('transform', function (d) {
@@ -395,7 +395,7 @@ function StateViz(container, nodes, linkArray) {
     // Keep coordinates in bounds. http://bl.ocks.org/mbostock/1129492
     // NB. Bounding can cause node centers to coincide, especially at corners.
     nodecircles.attr({cx: function (d) { return d.x = limitRange(nodeRadius, w - nodeRadius, d.x); },
-                      cy: function (d) { return d.y = limitRange(nodeRadius, h - nodeRadius, d.y); }
+      cy: function (d) { return d.y = limitRange(nodeRadius, h - nodeRadius, d.y); }
     });
 
     nodelabels.attr('x', function (d) { return d.x; })

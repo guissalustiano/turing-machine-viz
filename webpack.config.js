@@ -97,7 +97,7 @@ const prodConfig = {
   devtool: 'source-map', // for the curious
   plugins: [
     new webpack.optimize.OccurrenceOrderPlugin(true),
-    new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
+    // new webpack.optimize.UglifyJsPlugin({compress: {warnings: false}})
   ]
 };
 

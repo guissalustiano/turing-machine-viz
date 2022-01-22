@@ -12,7 +12,7 @@ function initTapeCells(selection) {
       // the box outline is purely visual, so remove its data binding
       .datum(null)
       .attr({'width': cellWidth,
-             'height': cellHeight});
+        'height': cellHeight});
   selection.append('text')
       .text(function (d) { return d; })
       .attr({'x': cellWidth/2, 'y': cellHeight/2 + 8});
@@ -64,11 +64,11 @@ function TapeViz(svg, lookaround, blank, input) {
 
   svg.append('rect')
       .attr({'id': 'tape-head',
-             'width': (1+1/5) * cellWidth,
-             'height': (1+1/5) * cellHeight,
-             'x': -cellWidth+10/2 + cellWidth*lookaround,
-             'y': 10/2
-           });
+        'width': (1+1/5) * cellWidth,
+        'height': (1+1/5) * cellHeight,
+        'x': -cellWidth+10/2 + cellWidth*lookaround,
+        'y': 10/2
+      });
 
   this.wrapper.selectAll('.tape-cell')
       .data(this.readRange(-lookaround, lookaround))

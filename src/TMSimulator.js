@@ -79,7 +79,7 @@ Object.defineProperties(TMSimulator.prototype, {
     enumerable: true
   },
   spec: {
-    get: function() {
+    get: function () {
       return this.__spec;
     }
   },
